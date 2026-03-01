@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/redistricting.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1544,8 +1544,26 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
-<h2 id="project-thoughts">Project thoughts</h2>
+<h2 id="project-thoughts-milestone-1">Project thoughts, Milestone 1</h2>
 <p>I am interested in exploring data related to elections and campaigns. I’d like to explore election factors, specifically campaigning tactics and their effect. For example, I may analyze if a candidate is more likely to be elected if they travel to states and cities to rally support.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>my_data</span> <span class='op'>&lt;-</span><span class='op'>(</span><span class='st'>"https://raw.githubusercontent.com/fivethirtyeight/data/master/redistricting-2022-state-legislatures/fivethirtyeight_state_legislative_district_analysis.csv"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/utils/write.table.html'>write.csv</a></span><span class='op'>(</span><span class='va'>my_data</span>, <span class='st'>"data/redistricting.csv"</span>, row.names <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<h2 id="milestone-2">Milestone 2</h2>
+<ol type="1">
+<li>Does one party controlling redistricting of a state produce larger efficiency gaps</li>
+<li>States in which a single party controls the redistricting process will advantage that party in exhibiting larger efficiency gaps. When one party determines how voters are grouped, it has legislative power to draw districts that maximize advantage. I’d also like to examine this hypothesis to see how much the redistricting process itself effects elections.</li>
+<li>My explanatory variable is partisan lean or PVI. It measures how much more democratic or republican a state or district is in relation to the nation.</li>
+<li>The outcome variable is the efficiency gap. This measures how efficiently each party’s votes become seats.</li>
+<li>As partisan lean increases, the efficiency gap should also increase. A positive relationship between PVI and efficiency gap would support my hypothesis. My hypothesis would be disproved if there was no relationship between PVI and efficiency gap, if there were small efficiency gaps for states with strong partisan leans, or if a strong partisan leads to a decrase in efficiency.</li>
+</ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
