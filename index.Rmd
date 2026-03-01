@@ -20,6 +20,8 @@ my_data <-("https://raw.githubusercontent.com/fivethirtyeight/data/master/redist
 write.csv(my_data, "data/redistricting.csv", row.names = FALSE)
 ```
 
+
+
 ## Milestone 2 
 1. Does one party controlling redistricting of a state produce larger efficiency gaps
 2. States in which a single party controls the redistricting process will advantage that party in exhibiting larger efficiency gaps. When one party determines how voters are grouped, it has legislative power to draw districts that maximize advantage. I'd also like to examine this hypothesis to see how much the redistricting process itself effects elections. 
