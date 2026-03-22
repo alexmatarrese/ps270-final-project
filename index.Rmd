@@ -14,7 +14,7 @@ output:
 I am interested in exploring data related to elections and campaigns. I'd like to explore election factors, specifically campaigning tactics and their effect. For example, I may analyze if a candidate is more likely to be elected if they travel to states and cities to rally support.
 
 ```{r}
-my_data <-("https://raw.githubusercontent.com/fivethirtyeight/data/master/redistricting-2022-state-legislatures/fivethirtyeight_state_legislative_district_analysis.csv")
+my_data <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/redistricting-2022-state-legislatures/fivethirtyeight_state_legislative_district_analysis.csv")
 ```
 ```{r}
 write.csv(my_data, "data/redistricting.csv", row.names = FALSE)
@@ -28,6 +28,45 @@ write.csv(my_data, "data/redistricting.csv", row.names = FALSE)
 3. My explanatory variable is partisan lean or PVI. It measures how much more democratic or republican a state or district is in relation to the nation. 
 4. The outcome variable is the efficiency gap. This measures how efficiently each party's votes become seats. 
 5. As partisan lean increases, the efficiency gap should also increase. A positive relationship between PVI and efficiency gap would support my hypothesis. My hypothesis would be disproved if there was no relationship between PVI and efficiency gap, if there were small efficiency gaps for states with strong partisan leans, or if a strong partisan leads to a decrase in efficiency. 
+
+## Milestone 3 
+
+```{r}
+library(tidyverse )
+data <- read.csv("data/redistricting.csv")
+
+data<- subset(data, metric == "efficiency_gap")
+
+data$value <- ifelse(
+ grepl("^R\\+", data$value),
+  sub("R\\+", "", data$value),
+  sub("D\\+", "-", data$value))
+data$value <- as.numeric(data$value)
+
+data<- subset(data, !is.na(value))
+```
+
+```{r}
+ggplot(data, aes(x = value)) +
+  geom_histogram(bins = 20, fill = "hotpink") +
+  theme_minimal() +
+  labs (title = "Distribution of Efficiency Gap",
+        x = "Efficiency Gap (R positive, D negative)",
+        y = "Number of Districts")
+```
+each bar represents how many districts fall within a particular range of efficiency gap values. 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
