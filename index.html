@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["data/redistricting.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/redistricting.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1544,6 +1544,15 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"data/redistricting.csv"</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] &quot;year&quot;     &quot;state&quot;    &quot;chamber&quot;  &quot;district&quot; &quot;metric&quot;   &quot;value&quot;   
+[7] &quot;pct&quot;     </code></pre>
+</div>
 <h2 id="project-thoughts-milestone-1">Project thoughts, Milestone 1</h2>
 <p>I am interested in exploring data related to elections and campaigns. I’d like to explore election factors, specifically campaigning tactics and their effect. For example, I may analyze if a candidate is more likely to be elected if they travel to states and cities to rally support.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1560,40 +1569,224 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <ol type="1">
 <li>Does one party controlling redistricting of a state produce larger efficiency gaps</li>
 <li>States in which a single party controls the redistricting process will advantage that party in exhibiting larger efficiency gaps. When one party determines how voters are grouped, it has legislative power to draw districts that maximize advantage. I’d also like to examine this hypothesis to see how much the redistricting process itself effects elections.</li>
-<li>My explanatory variable is partisan lean or PVI. It measures how much more democratic or republican a state or district is in relation to the nation.</li>
+<li>My explanatory variable is district-level partisan composition (pct). This variable shows how partisan the district is.</li>
 <li>The outcome variable is the efficiency gap. This measures how efficiently each party’s votes become seats.</li>
-<li>As partisan lean increases, the efficiency gap should also increase. A positive relationship between PVI and efficiency gap would support my hypothesis. My hypothesis would be disproved if there was no relationship between PVI and efficiency gap, if there were small efficiency gaps for states with strong partisan leans, or if a strong partisan leads to a decrase in efficiency.</li>
+<li>As pct increases, the efficiency gap should also increase. A positive relationship between pct and efficiency gap would support my hypothesis. My hypothesis would be disproved if there was no relationship between pct and efficiency gap, if there were small efficiency gaps for states with strong partisan leans, or if a strong partisan leads to a decrase in efficiency.</li>
 </ol>
+<p>Note (4/12/26): While I initially considered campaign tactics, I shifted my focus to redistricting data and analysis of partisan advantages through the efficiency gap.</p>
 <h2 id="milestone-3">Milestone 3</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span> <span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span></span>
 <span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"data/redistricting.csv"</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='va'>data</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>metric</span> <span class='op'>==</span> <span class='st'>"efficiency_gap"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>data</span><span class='op'>$</span><span class='va'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span></span>
-<span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"^R\\+"</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>value</span><span class='op'>)</span>,</span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>"R\\+"</span>, <span class='st'>""</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>value</span><span class='op'>)</span>,</span>
-<span>  <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>"D\\+"</span>, <span class='st'>"-"</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>value</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='va'>data</span><span class='op'>$</span><span class='va'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>value</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>data</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>value</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>eff_data</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>metric</span> <span class='op'>==</span> <span class='st'>"efficiency_gap"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span>    efficiency_gap <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
+<span>      <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"^R\\+"</span>, <span class='va'>value</span><span class='op'>)</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>"R\\+"</span>,<span class='st'>""</span>, <span class='va'>value</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>      <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"^D\\+"</span>, <span class='va'>value</span><span class='op'>)</span> <span class='op'>~</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>"D\\+"</span>, <span class='st'>""</span>, <span class='va'>value</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>      <span class='cn'>TRUE</span> <span class='op'>~</span><span class='cn'>NA_real_</span></span>
+<span>    <span class='op'>)</span></span>
+<span>  <span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>efficiency_gap</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>value</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>eff_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>efficiency_gap</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>bins <span class='op'>=</span> <span class='fl'>20</span>, fill <span class='op'>=</span> <span class='st'>"hotpink"</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span> <span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Distribution of Efficiency Gap"</span>,</span>
 <span>        x <span class='op'>=</span> <span class='st'>"Efficiency Gap (R positive, D negative)"</span>,</span>
 <span>        y <span class='op'>=</span> <span class='st'>"Number of Districts"</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" alt="" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" alt="" width="624" /></p>
 </div>
 <p>each bar represents how many districts fall within a particular range of efficiency gap values.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="milestone-4">Milestone 4</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>raw_data</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"data/redistricting.csv"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>raw_data</span><span class='op'>$</span><span class='va'>value</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace_all</a></span><span class='op'>(</span><span class='va'>raw_data</span><span class='op'>$</span><span class='va'>value</span>, <span class='st'>","</span>,<span class='st'>""</span><span class='op'>)</span></span>
+<span><span class='va'>raw_data</span><span class='op'>$</span><span class='va'>metric</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='va'>raw_data</span><span class='op'>$</span><span class='va'>metric</span><span class='op'>)</span></span>
+<span><span class='va'>raw_data</span><span class='op'>$</span><span class='va'>state</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='va'>raw_data</span><span class='op'>$</span><span class='va'>state</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>biden_rows</span> <span class='op'>&lt;-</span> <span class='va'>raw_data</span><span class='op'>[</span><span class='va'>raw_data</span><span class='op'>$</span><span class='va'>metric</span> <span class='op'>==</span> <span class='st'>"biden_2020"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"state"</span>, <span class='st'>"pct"</span><span class='op'>)</span><span class='op'>]</span></span>
+<span></span>
+<span><span class='va'>biden_state</span> <span class='op'>&lt;-</span> <span class='va'>biden_rows</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>state</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>biden_2020 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>pct</span><span class='op'>)</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, .groups <span class='op'>=</span> <span class='st'>"drop"</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span><span class='va'>eff_gap</span> <span class='op'>&lt;-</span> <span class='va'>raw_data</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>metric</span> <span class='op'>==</span> <span class='st'>"efficiency_gap"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span>    num <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_extract.html'>str_extract</a></span><span class='op'>(</span><span class='va'>value</span>, <span class='st'>"[0-9.]+"</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>    efficiency_gap <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
+<span>      <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_detect.html'>str_detect</a></span><span class='op'>(</span><span class='va'>value</span>, <span class='st'>"R"</span><span class='op'>)</span> <span class='op'>~</span> <span class='op'>-</span><span class='va'>num</span>,</span>
+<span>      <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_detect.html'>str_detect</a></span><span class='op'>(</span><span class='va'>value</span>, <span class='st'>"D"</span><span class='op'>)</span> <span class='op'>~</span> <span class='va'>num</span>,</span>
+<span>      <span class='cn'>TRUE</span> <span class='op'>~</span> <span class='va'>num</span></span>
+<span>    <span class='op'>)</span></span>
+<span>  <span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>state</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>efficiency_gap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>efficiency_gap</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, .groups <span class='op'>=</span> <span class='st'>"drop"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>clean_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>biden_state</span>, <span class='va'>eff_gap</span>, by <span class='op'>=</span> <span class='st'>"state"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>clean_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>biden_2020</span>, y <span class='op'>=</span> <span class='va'>efficiency_gap</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>3</span>, color <span class='op'>=</span> <span class='st'>"hotpink"</span>, alpha <span class='op'>=</span> <span class='fl'>0.6</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Biden 2020 Vote %"</span>, y <span class='op'>=</span> <span class='st'>"Efficiency Gap (Positive = D Advantage)"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"Partisan Lean vs. Redistricting Efficiency"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-7-1.png" alt="" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>efficiency_gap</span> <span class='op'>~</span> <span class='va'>biden_2020</span>, data <span class='op'>=</span> <span class='va'>clean_data</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = efficiency_gap ~ biden_2020, data = clean_data)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-5.707 -3.684 -1.809  3.879  7.910 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept) -83.3484    20.1420  -4.138  0.00117 **
+biden_2020    1.5888     0.3839   4.139  0.00117 **
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 4.781 on 13 degrees of freedom
+Multiple R-squared:  0.5685,    Adjusted R-squared:  0.5354 
+F-statistic: 17.13 on 1 and 13 DF,  p-value: 0.001165</code></pre>
+</div>
+<h2 id="analysis">Analysis</h2>
+<p>For every 1% increase in Biden’s vote share, the efficiency gap increases by about 1.59 points. This is a significant relationship.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://yihui.org/knitr/'>knitr</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>clean_data</span> <span class='op'>&lt;-</span> <span class='va'>clean_data</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span></span>
+<span>    predicted_gap <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>,</span>
+<span>    difference <span class='op'>=</span> <span class='va'>efficiency_gap</span> <span class='op'>-</span> <span class='va'>predicted_gap</span></span>
+<span>  <span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>final_table</span> <span class='op'>&lt;-</span> <span class='va'>clean_data</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>state</span>, <span class='va'>biden_2020</span>, <span class='va'>efficiency_gap</span>, <span class='va'>predicted_gap</span>, <span class='va'>difference</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>difference</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span></span>
+<span>    <span class='st'>"State"</span> <span class='op'>=</span> <span class='va'>state</span>,</span>
+<span>    <span class='st'>"Biden %"</span> <span class='op'>=</span> <span class='va'>biden_2020</span>,</span>
+<span>    <span class='st'>"Actual Gap"</span> <span class='op'>=</span> <span class='va'>efficiency_gap</span>,</span>
+<span>    <span class='st'>"Predicted Gap"</span> <span class='op'>=</span> <span class='va'>predicted_gap</span>,</span>
+<span>    <span class='st'>"Difference"</span> <span class='op'>=</span> <span class='va'>difference</span></span>
+<span>  <span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>final_table</span>, digits <span class='op'>=</span> <span class='fl'>2</span>, caption <span class='op'>=</span> <span class='st'>"Analysis of Efficiency Gap, Actual vs. Predicted"</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<caption><span id="tab:unnamed-chunk-9">Table 1: </span>Analysis of Efficiency Gap, Actual vs. Predicted</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">State</th>
+<th style="text-align: right;">Biden %</th>
+<th style="text-align: right;">Actual Gap</th>
+<th style="text-align: right;">Predicted Gap</th>
+<th style="text-align: right;">Difference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NM</td>
+<td style="text-align: right;">53.24</td>
+<td style="text-align: right;">9.15</td>
+<td style="text-align: right;">1.24</td>
+<td style="text-align: right;">7.91</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NV</td>
+<td style="text-align: right;">52.15</td>
+<td style="text-align: right;">6.78</td>
+<td style="text-align: right;">-0.49</td>
+<td style="text-align: right;">7.26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AZ</td>
+<td style="text-align: right;">51.55</td>
+<td style="text-align: right;">-7.15</td>
+<td style="text-align: right;">-1.44</td>
+<td style="text-align: right;">-5.71</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OR</td>
+<td style="text-align: right;">55.89</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">5.45</td>
+<td style="text-align: right;">-5.43</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CT</td>
+<td style="text-align: right;">60.71</td>
+<td style="text-align: right;">17.93</td>
+<td style="text-align: right;">13.10</td>
+<td style="text-align: right;">4.83</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NC</td>
+<td style="text-align: right;">48.41</td>
+<td style="text-align: right;">-1.88</td>
+<td style="text-align: right;">-6.43</td>
+<td style="text-align: right;">4.55</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">VA</td>
+<td style="text-align: right;">54.35</td>
+<td style="text-align: right;">-1.48</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">-4.48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MI</td>
+<td style="text-align: right;">51.69</td>
+<td style="text-align: right;">-5.65</td>
+<td style="text-align: right;">-1.23</td>
+<td style="text-align: right;">-4.42</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TX</td>
+<td style="text-align: right;">48.11</td>
+<td style="text-align: right;">-3.70</td>
+<td style="text-align: right;">-6.91</td>
+<td style="text-align: right;">3.21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GA</td>
+<td style="text-align: right;">50.05</td>
+<td style="text-align: right;">-6.78</td>
+<td style="text-align: right;">-3.83</td>
+<td style="text-align: right;">-2.95</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

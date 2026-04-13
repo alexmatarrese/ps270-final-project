@@ -7,6 +7,11 @@ output:
     self_contained: false
 ---
 
+```{r}
+library(tidyverse)
+data <- read.csv("data/redistricting.csv")
+names(data)
+```
 
 
 ## Project thoughts, Milestone 1
@@ -25,29 +30,34 @@ write.csv(my_data, "data/redistricting.csv", row.names = FALSE)
 ## Milestone 2 
 1. Does one party controlling redistricting of a state produce larger efficiency gaps
 2. States in which a single party controls the redistricting process will advantage that party in exhibiting larger efficiency gaps. When one party determines how voters are grouped, it has legislative power to draw districts that maximize advantage. I'd also like to examine this hypothesis to see how much the redistricting process itself effects elections. 
-3. My explanatory variable is partisan lean or PVI. It measures how much more democratic or republican a state or district is in relation to the nation. 
+3. My explanatory variable is district-level partisan composition (pct). This variable shows how partisan the district is. 
 4. The outcome variable is the efficiency gap. This measures how efficiently each party's votes become seats. 
-5. As partisan lean increases, the efficiency gap should also increase. A positive relationship between PVI and efficiency gap would support my hypothesis. My hypothesis would be disproved if there was no relationship between PVI and efficiency gap, if there were small efficiency gaps for states with strong partisan leans, or if a strong partisan leads to a decrase in efficiency. 
+5. As pct increases, the efficiency gap should also increase. A positive relationship between pct and efficiency gap would support my hypothesis. My hypothesis would be disproved if there was no relationship between pct and efficiency gap, if there were small efficiency gaps for states with strong partisan leans, or if a strong partisan leads to a decrase in efficiency. 
+
+Note (4/12/26): While I initially considered campaign tactics, I shifted my focus to redistricting data and analysis of partisan advantages through the efficiency gap.
 
 ## Milestone 3 
 
 ```{r}
-library(tidyverse )
+library(tidyverse)
+
 data <- read.csv("data/redistricting.csv")
 
-data<- subset(data, metric == "efficiency_gap")
+eff_data <- data |>
+  filter(metric == "efficiency_gap") |>
+  mutate(
+    efficiency_gap = case_when(
+      grepl("^R\\+", value) ~ as.numeric(sub("R\\+","", value)),
+      grepl("^D\\+", value) ~-as.numeric(sub("D\\+", "", value)),
+      TRUE ~NA_real_
+    )
+  )|>
+  filter(!is.na(efficiency_gap))
 
-data$value <- ifelse(
- grepl("^R\\+", data$value),
-  sub("R\\+", "", data$value),
-  sub("D\\+", "-", data$value))
-data$value <- as.numeric(data$value)
-
-data<- subset(data, !is.na(value))
 ```
 
 ```{r}
-ggplot(data, aes(x = value)) +
+ggplot(eff_data, aes(x = efficiency_gap)) +
   geom_histogram(bins = 20, fill = "hotpink") +
   theme_minimal() +
   labs (title = "Distribution of Efficiency Gap",
@@ -56,6 +66,85 @@ ggplot(data, aes(x = value)) +
 ```
 each bar represents how many districts fall within a particular range of efficiency gap values. 
 
+
+## Milestone 4
+```{r}
+library(tidyverse)
+
+raw_data<- read.csv("data/redistricting.csv")
+
+raw_data$value <- str_replace_all(raw_data$value, ",","")
+raw_data$metric <- str_trim(raw_data$metric)
+raw_data$state <- str_trim(raw_data$state)
+
+biden_rows <- raw_data[raw_data$metric == "biden_2020", c("state", "pct")]
+
+biden_state <- biden_rows |>
+  group_by(state) |>
+  summarize(biden_2020 = mean(as.numeric(pct), na.rm = TRUE), .groups = "drop")
+
+
+eff_gap <- raw_data |>
+  filter(metric == "efficiency_gap") |>
+  mutate(
+    num = as.numeric(str_extract(value, "[0-9.]+")),
+    efficiency_gap = case_when(
+      str_detect(value, "R") ~ -num,
+      str_detect(value, "D") ~ num,
+      TRUE ~ num
+    )
+  ) |>
+  group_by(state) |>
+  summarize(efficiency_gap = mean(efficiency_gap, na.rm = TRUE), .groups = "drop")
+
+clean_data <- inner_join(biden_state, eff_gap, by = "state")
+  
+
+```
+
+
+```{r}
+ggplot(clean_data, aes(x = biden_2020, y = efficiency_gap)) +
+  geom_point(size = 3, color = "hotpink", alpha = 0.6) +
+  geom_smooth(method = "lm", color = "black") +
+  labs(x = "Biden 2020 Vote %", y = "Efficiency Gap (Positive = D Advantage)",
+       title = "Partisan Lean vs. Redistricting Efficiency") +
+  theme_minimal()
+```
+
+```{r}
+model <- lm(efficiency_gap ~ biden_2020, data = clean_data)
+
+summary(model)
+```
+
+## Analysis
+
+For every 1% increase in Biden's vote share, the efficiency gap increases by about 1.59 points. This is a significant relationship.
+
+```{r}
+library(knitr)
+library(dplyr)
+
+clean_data <- clean_data |>
+  mutate(
+    predicted_gap = predict(model),
+    difference = efficiency_gap - predicted_gap
+  )
+
+final_table <- clean_data |>
+  select(state, biden_2020, efficiency_gap, predicted_gap, difference) |>
+  arrange(desc(abs(difference))) |>
+  head(10) |>
+  rename(
+    "State" = state,
+    "Biden %" = biden_2020,
+    "Actual Gap" = efficiency_gap,
+    "Predicted Gap" = predicted_gap,
+    "Difference" = difference
+  )
+kable(final_table, digits = 2, caption = "Analysis of Efficiency Gap, Actual vs. Predicted")
+```
 
 
 
