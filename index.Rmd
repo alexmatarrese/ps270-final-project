@@ -26,6 +26,7 @@ write.csv(my_data, "data/redistricting.csv", row.names = FALSE)
 ```
 
 
+\newpage
 
 ## Milestone 2 
 1. Does one party controlling redistricting of a state produce larger efficiency gaps
@@ -34,8 +35,12 @@ write.csv(my_data, "data/redistricting.csv", row.names = FALSE)
 4. The outcome variable is the efficiency gap. This measures how efficiently each party's votes become seats. 
 5. As pct increases, the efficiency gap should also increase. A positive relationship between pct and efficiency gap would support my hypothesis. My hypothesis would be disproved if there was no relationship between pct and efficiency gap, if there were small efficiency gaps for states with strong partisan leans, or if a strong partisan leads to a decrase in efficiency. 
 
+## Notes
 Note (4/12/26): While I initially considered campaign tactics, I shifted my focus to redistricting data and analysis of partisan advantages through the efficiency gap.
 
+
+
+\newpage
 ## Milestone 3 
 
 ```{r}
@@ -67,6 +72,12 @@ ggplot(eff_data, aes(x = efficiency_gap)) +
 each bar represents how many districts fall within a particular range of efficiency gap values. 
 
 
+
+
+
+
+
+\newpage
 ## Milestone 4
 ```{r}
 library(tidyverse)
@@ -147,7 +158,7 @@ kable(final_table, digits = 2, caption = "Analysis of Efficiency Gap, Actual vs.
 ```
 
 
-
+\newpage
 
 
 
