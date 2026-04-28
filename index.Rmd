@@ -7,26 +7,26 @@ output:
     self_contained: true
 ---
 
-```{r}
+```{r, echo=FALSE}
 library(tidyverse)
 data <- read.csv("data/redistricting.csv")
 ```
 
-## Introduction
-
-Inital Project Thoughts: I am interested in exploring data related to elections and campaigns. I'd like to explore election factors, specifically campaigning tactics and their effect. For example, I may analyze if a candidate is more likely to be elected if they travel to states and cities to rally support.
-
-Note (4/12/26): While I initially considered campaign tactics, I shifted my focus to redistricting data and analysis of partisan advantages through the efficiency gap.
-
-```{r}
+```{r, echo=FALSE }
 my_data <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/redistricting-2022-state-legislatures/fivethirtyeight_state_legislative_district_analysis.csv")
 ```
-```{r}
+
+```{r, echo=FALSE}
 write.csv(my_data, "data/redistricting.csv", row.names = FALSE)
 ```
 
-1. Does one party controlling redistricting of a state produce larger efficiency gaps
-2. States in which a single party controls the redistricting process will advantage that party in exhibiting larger efficiency gaps. When one party determines how voters are grouped, it has legislative power to draw districts that maximize advantage. I'd also like to examine this hypothesis to see how much the redistricting process itself effects elections. 
+## Introduction
+
+In this project, I examined the relationship between a state's political lean and the fairness of its legislative districts. My research question ultimately became: Does partisan composition of a state correlate with the efficiency gap of its redistricting maps? I hypothesize that states with higher Democratic lean will exhibit an efficiency gap that advantages Democrats and vice versa for Republican states. This is an important question to consider, as efficiency gap can identify gerrymandering. My goal was to better understand if there was a connection between a state's partisan composition and this indicator of gerrymandering. 
+
+
+
+
 3. My explanatory variable is district-level partisan composition (pct). This variable shows how partisan the district is. 
 4. The outcome variable is the efficiency gap. This measures how efficiently each party's votes become seats. 
 5. As pct increases, the efficiency gap should also increase. A positive relationship between pct and efficiency gap would support my hypothesis. My hypothesis would be disproved if there was no relationship between pct and efficiency gap, if there were small efficiency gaps for states with strong partisan leans, or if a strong partisan leads to a decrase in efficiency. 
@@ -34,12 +34,13 @@ write.csv(my_data, "data/redistricting.csv", row.names = FALSE)
 
 
 \newpage
-## Milestone 3 
+## Data Section
 
-```{r}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
 
 data <- read.csv("data/redistricting.csv")
+
 
 eff_data <- data |>
   filter(metric == "efficiency_gap") |>
@@ -51,28 +52,28 @@ eff_data <- data |>
     )
   )|>
   filter(!is.na(efficiency_gap))
-
 ```
 
-```{r}
+My data came from FiveThirtyEight's 2022 State Legislative Redistricting Tracker. This dataset covers thousands of districts across the U.S. to see how the new maps drawn after the 2020 Census changed the political landscape. I converted these to the state level for my scatterplot. This study uses a cross-sectional research design, as it looks at partisan lean and efficiency across districts and states in the same redistricting cycle. 
+  
+The independent variable is partisan lean. This is measured by the average percentage of the 2020 Biden vote within the districts of a state. The 2020 Biden vote share is an expert-coded metric, calculated by analysts. The dependent variable is efficiency gap. This is a statistical model that is used to see if there is partisan balance in redistricting. The efficiency gap in this study was calculated and then converted onto a scale where positive numbers equal Democratic advantage and negative numbers equal Republican advantage.
+
+Efficiency gap can indicate gerrymandering. Efficiency gap is determined by analyzing "wasted votes". These are votes for a losing candidate or extra votes for the winner. If there is a high level of these "wasted votes", this can indicate skewed redistricting with the goal of wasting opponents votes. By analyzing efficiency gap across districts by itself, the initial question of the existence of efficiency gaps can be examined. 
+    
+  
+```{r, echo=FALSE}
 ggplot(eff_data, aes(x = efficiency_gap)) +
-  geom_histogram(bins = 20, fill = "hotpink") +
+  geom_histogram(bins = 20, fill = "hotpink", color = "white") +
   theme_minimal() +
-  labs (title = "Distribution of Efficiency Gap",
+  labs (title = "Figure 1: Distribution of Efficiency Gap",
+        subtitle = "Summary of the Dependent Variable",
         x = "Efficiency Gap (R positive, D negative)",
         y = "Number of Districts")
 ```
-each bar represents how many districts fall within a particular range of efficiency gap values. 
-
-
-
-
-
-
 
 \newpage
 ## Milestone 4
-```{r}
+```{r, echo=FALSE}
 library(tidyverse)
 
 raw_data<- read.csv("data/redistricting.csv")
@@ -107,7 +108,7 @@ clean_data <- inner_join(biden_state, eff_gap, by = "state")
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 ggplot(clean_data, aes(x = biden_2020, y = efficiency_gap)) +
   geom_point(size = 3, color = "hotpink", alpha = 0.6) +
   geom_smooth(method = "lm", color = "black") +
@@ -116,17 +117,18 @@ ggplot(clean_data, aes(x = biden_2020, y = efficiency_gap)) +
   theme_minimal()
 ```
 
-```{r}
+```{r, echo=FALSE}
 model <- lm(efficiency_gap ~ biden_2020, data = clean_data)
 
 summary(model)
+
 ```
 
 ## Analysis
 
 For every 1% increase in Biden's vote share, the efficiency gap increases by about 1.59 points. This is a significant relationship.
 
-```{r}
+```{r, echo=FALSE}
 library(knitr)
 library(dplyr)
 
@@ -154,7 +156,9 @@ kable(final_table, digits = 2, caption = "Analysis of Efficiency Gap, Actual vs.
 \newpage
 
 
+```{r print-code, ref.label=knitr::all_labels(), echo = TRUE, eval=FALSE}
 
+```
 
 
 
