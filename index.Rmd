@@ -10,13 +10,13 @@ output:
 ```{r}
 library(tidyverse)
 data <- read.csv("data/redistricting.csv")
-names(data)
 ```
 
+## Introduction
 
-## Project thoughts, Milestone 1
+Inital Project Thoughts: I am interested in exploring data related to elections and campaigns. I'd like to explore election factors, specifically campaigning tactics and their effect. For example, I may analyze if a candidate is more likely to be elected if they travel to states and cities to rally support.
 
-I am interested in exploring data related to elections and campaigns. I'd like to explore election factors, specifically campaigning tactics and their effect. For example, I may analyze if a candidate is more likely to be elected if they travel to states and cities to rally support.
+Note (4/12/26): While I initially considered campaign tactics, I shifted my focus to redistricting data and analysis of partisan advantages through the efficiency gap.
 
 ```{r}
 my_data <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/redistricting-2022-state-legislatures/fivethirtyeight_state_legislative_district_analysis.csv")
@@ -25,18 +25,11 @@ my_data <- read.csv("https://raw.githubusercontent.com/fivethirtyeight/data/mast
 write.csv(my_data, "data/redistricting.csv", row.names = FALSE)
 ```
 
-
-\newpage
-
-## Milestone 2 
 1. Does one party controlling redistricting of a state produce larger efficiency gaps
 2. States in which a single party controls the redistricting process will advantage that party in exhibiting larger efficiency gaps. When one party determines how voters are grouped, it has legislative power to draw districts that maximize advantage. I'd also like to examine this hypothesis to see how much the redistricting process itself effects elections. 
 3. My explanatory variable is district-level partisan composition (pct). This variable shows how partisan the district is. 
 4. The outcome variable is the efficiency gap. This measures how efficiently each party's votes become seats. 
 5. As pct increases, the efficiency gap should also increase. A positive relationship between pct and efficiency gap would support my hypothesis. My hypothesis would be disproved if there was no relationship between pct and efficiency gap, if there were small efficiency gaps for states with strong partisan leans, or if a strong partisan leads to a decrase in efficiency. 
-
-## Notes
-Note (4/12/26): While I initially considered campaign tactics, I shifted my focus to redistricting data and analysis of partisan advantages through the efficiency gap.
 
 
 

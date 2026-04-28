@@ -2387,14 +2387,12 @@ distill-header .nav a {
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">&quot;data/redistricting.csv&quot;</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">&quot;data/redistricting.csv&quot;</span><span class="op">)</span></span></code></pre>
 </div>
-<pre><code>[1] &quot;year&quot;     &quot;state&quot;    &quot;chamber&quot;  &quot;district&quot; &quot;metric&quot;   &quot;value&quot;   
-[7] &quot;pct&quot;     </code></pre>
 </div>
-<h2 id="project-thoughts-milestone-1">Project thoughts, Milestone 1</h2>
-<p>I am interested in exploring data related to elections and campaigns. I’d like to explore election factors, specifically campaigning tactics and their effect. For example, I may analyze if a candidate is more likely to be elected if they travel to states and cities to rally support.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Inital Project Thoughts: I am interested in exploring data related to elections and campaigns. I’d like to explore election factors, specifically campaigning tactics and their effect. For example, I may analyze if a candidate is more likely to be elected if they travel to states and cities to rally support.</p>
+<p>Note (4/12/26): While I initially considered campaign tactics, I shifted my focus to redistricting data and analysis of partisan advantages through the efficiency gap.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">&quot;https://raw.githubusercontent.com/fivethirtyeight/data/master/redistricting-2022-state-legislatures/fivethirtyeight_state_legislative_district_analysis.csv&quot;</span><span class="op">)</span></span></code></pre>
@@ -2405,8 +2403,6 @@ distill-header .nav a {
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.csv</a></span><span class="op">(</span><span class="va">my_data</span>, <span class="st">&quot;data/redistricting.csv&quot;</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre>
 </div>
 </div>
-<div style="page-break-after: always;"></div>
-<h2 id="milestone-2">Milestone 2</h2>
 <ol type="1">
 <li>Does one party controlling redistricting of a state produce larger efficiency gaps</li>
 <li>States in which a single party controls the redistricting process will advantage that party in exhibiting larger efficiency gaps. When one party determines how voters are grouped, it has legislative power to draw districts that maximize advantage. I’d also like to examine this hypothesis to see how much the redistricting process itself effects elections.</li>
@@ -2414,8 +2410,6 @@ distill-header .nav a {
 <li>The outcome variable is the efficiency gap. This measures how efficiently each party’s votes become seats.</li>
 <li>As pct increases, the efficiency gap should also increase. A positive relationship between pct and efficiency gap would support my hypothesis. My hypothesis would be disproved if there was no relationship between pct and efficiency gap, if there were small efficiency gaps for states with strong partisan leans, or if a strong partisan leads to a decrase in efficiency.</li>
 </ol>
-<h2 id="notes">Notes</h2>
-<p>Note (4/12/26): While I initially considered campaign tactics, I shifted my focus to redistricting data and analysis of partisan advantages through the efficiency gap.</p>
 <div style="page-break-after: always;"></div>
 <h2 id="milestone-3">Milestone 3</h2>
 <div class="layout-chunk" data-layout="l-body">
@@ -2631,7 +2625,7 @@ F-statistic: 17.13 on 1 and 13 DF,  p-value: 0.001165</code></pre>
 </table>
 </div>
 <div style="page-break-after: always;"></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
