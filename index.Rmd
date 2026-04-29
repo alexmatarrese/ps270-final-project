@@ -7,8 +7,28 @@ output:
     self_contained: true
 ---
 
+<style>
+d-title h1 {
+  color: #FF69B4; 
+}
+d-title {
+  background-color: #FFF0F5; 
+  border-bottom: 2px solid #FF69B4;
+}
+h2, h3 {
+  color: #D23669;
+  border-bottom: 1px solid #FFB6C1;
+  padding-bottom: 5px;
+}
+body {
+  background-color: #FFFFFF; 
+}
+</style>
+
+
 ```{r, echo=FALSE}
 library(tidyverse)
+library(broom)
 data <- read.csv("data/redistricting.csv")
 ```
 
@@ -22,16 +42,9 @@ write.csv(my_data, "data/redistricting.csv", row.names = FALSE)
 
 ## Introduction
 
-In this project, I examined the relationship between a state's political lean and the fairness of its legislative districts. My research question ultimately became: Does partisan composition of a state correlate with the efficiency gap of its redistricting maps? I hypothesize that states with higher Democratic lean will exhibit an efficiency gap that advantages Democrats and vice versa for Republican states. This is an important question to consider, as efficiency gap can identify gerrymandering. My goal was to better understand if there was a connection between a state's partisan composition and this indicator of gerrymandering. 
+In this project, I examined the relationship between a state's political lean and the fairness of its legislative districts. My research question ultimately became: Does partisan composition of a state correlate with the efficiency gap of its redistricting maps? I hypothesize that states with higher Democratic lean will exhibit an efficiency gap that advantages Democrats, and vice versa for Republican states. 
 
-
-
-
-3. My explanatory variable is district-level partisan composition (pct). This variable shows how partisan the district is. 
-4. The outcome variable is the efficiency gap. This measures how efficiently each party's votes become seats. 
-5. As pct increases, the efficiency gap should also increase. A positive relationship between pct and efficiency gap would support my hypothesis. My hypothesis would be disproved if there was no relationship between pct and efficiency gap, if there were small efficiency gaps for states with strong partisan leans, or if a strong partisan leads to a decrase in efficiency. 
-
-
+This is an important question to consider, as efficiency gap can identify gerrymandering. By analyzing how "wasted votes" are distributed across districts and areas with different political composition, we can better understand if these maps were influenced by partisan manipulation. My goal was to better understand if there was a connection between a state's partisan composition and this indicator of gerrymandering. 
 
 \newpage
 ## Data Section
@@ -56,9 +69,11 @@ eff_data <- data |>
 
 My data came from FiveThirtyEight's 2022 State Legislative Redistricting Tracker. This dataset covers thousands of districts across the U.S. to see how the new maps drawn after the 2020 Census changed the political landscape. I converted these to the state level for my scatterplot. This study uses a cross-sectional research design, as it looks at partisan lean and efficiency across districts and states in the same redistricting cycle. 
   
-The independent variable is partisan lean. This is measured by the average percentage of the 2020 Biden vote within the districts of a state. The 2020 Biden vote share is an expert-coded metric, calculated by analysts. The dependent variable is efficiency gap. This is a statistical model that is used to see if there is partisan balance in redistricting. The efficiency gap in this study was calculated and then converted onto a scale where positive numbers equal Democratic advantage and negative numbers equal Republican advantage.
+The independent variable, or predictor, is partisan lean. This is measured by the average percentage of the 2020 Biden vote within the districts of a state. The 2020 Biden vote share is an expert-coded metric, calculated by analysts. The dependent variable, or outcome variable, is efficiency gap. This is a statistical model that is used to see if there is partisan balance in redistricting. The efficiency gap in this study was calculated and then converted onto a scale where positive numbers equal Democratic advantage and negative numbers equal Republican advantage.
 
 Efficiency gap can indicate gerrymandering. Efficiency gap is determined by analyzing "wasted votes". These are votes for a losing candidate or extra votes for the winner. If there is a high level of these "wasted votes", this can indicate skewed redistricting with the goal of wasting opponents votes. By analyzing efficiency gap across districts by itself, the initial question of the existence of efficiency gaps can be examined. 
+
+The histogram below shows the distribution of the efficiency gap across districts.
     
   
 ```{r, echo=FALSE}
@@ -68,11 +83,14 @@ ggplot(eff_data, aes(x = efficiency_gap)) +
   labs (title = "Figure 1: Distribution of Efficiency Gap",
         subtitle = "Summary of the Dependent Variable",
         x = "Efficiency Gap (R positive, D negative)",
-        y = "Number of Districts")
+        y = "Number of Districts / Frequency")
 ```
 
 \newpage
-## Milestone 4
+## Results Section
+
+The scatterplot below shows the relationship between average Biden vote share and the efficiency gap. 
+
 ```{r, echo=FALSE}
 library(tidyverse)
 
@@ -111,22 +129,43 @@ clean_data <- inner_join(biden_state, eff_gap, by = "state")
 ```{r, echo=FALSE}
 ggplot(clean_data, aes(x = biden_2020, y = efficiency_gap)) +
   geom_point(size = 3, color = "hotpink", alpha = 0.6) +
-  geom_smooth(method = "lm", color = "black") +
+  geom_smooth(method = "lm", color = "#D23669") +
   labs(x = "Biden 2020 Vote %", y = "Efficiency Gap (Positive = D Advantage)",
        title = "Partisan Lean vs. Redistricting Efficiency") +
   theme_minimal()
 ```
 
-```{r, echo=FALSE}
+The table below shows the main regression of the efficiency gap on Biden vote share. 
+
+```{r, include=FALSE}
 model <- lm(efficiency_gap ~ biden_2020, data = clean_data)
 
 summary(model)
 
+
 ```
 
-## Analysis
+```{r, echo=FALSE}
+model_table <- tidy(model)
+knitr::kable(model_table, digits = 3,
+             caption = "Regression of Efficiency Gap on Biden Vote Share")
+```
 
-For every 1% increase in Biden's vote share, the efficiency gap increases by about 1.59 points. This is a significant relationship.
+The scatterplot shows a clear positive linear trend between a state's partisan lean and its efficiency gap. This indicates that as a state's Democratic lean increases, the efficiency gap shifts in favor of Democrats. The regression table agrees with this. The main coefficient of interest is 1.5889 which means that for every 1% increase in Biden vote share, the efficiency gap is predicted to increase by 1.59 points in the Democratic direction. Substantively, this coefficient is large and suggests that small shifts in a states partisan attitude can have meaningful changes in efficiency gap. 
+
+This result is statistically significant. The p-value is 0.001, which is below 0.05. This indicates that partisan lean can be a predictor of redistricting unfairness. We can confidently reject the null hypothesis and draw the conclusion that a state's partisan lean is a reliable predictor of its efficiency gap.
+
+However, this cannot really be interpreted causally. Most likely, the trend of who is in power due to greater vote share simply happens to correlate with the redistricting process. Those in power as those drawing the redistricting maps. There is no way to say if this is a directly causal relationship. 
+
+## Conclusion Section
+
+In conclusion, the results of this data analysis provide strong support for the hypothesis that a state's partisan lean is positively correlated with its efficiency gap. As the 2020 vote share increases, the redistricting maps give a Democratic advantage. This is supported with the statistically significant coefficient of 1.59. 
+
+There are notable limitations to this analysis, however. The most likely issue is confounding variables. This prevents me from interpreting if the regression coefficient is a direct causal effect. The most significant confounder is partisan control of the redistricting process. It is hard to say if the citizens' partisan lean plays any really role in the redistricting process itself. The figures I produced are likely displaying the combined effect of voter composition and policy makers controlling the redistricting process. 
+
+If I had more time to experiment further, I would look into the specific people or groups who are doing the redistricting to examine if there is a more causal, partisan relationship between that variable and efficiency gap. 
+
+The table below displays the ten states with the largest residuals, the difference between the actual efficiency gap and the predicted gap. A large positive difference indicates a state had a stronger Democratic lean advantage in the efficiency gap. A large negative difference indicates a state had a stronger Republican lean than predicted. These outliers demonstrate that while partisan lean seems to be a strong predictor of efficiency gap, there are still inconsistencies. 
 
 ```{r, echo=FALSE}
 library(knitr)
